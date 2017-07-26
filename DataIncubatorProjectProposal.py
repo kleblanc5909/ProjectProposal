@@ -24,6 +24,7 @@ RestDF = DF.parse('RESTAURANTS')
 InsecureDF = DF.parse('INSECURITY')
 LocalDF = DF.parse('LOCAL')
 AssistDF = DF.parse('ASSISTANCE')
+VariablesDF = DF.parse('Variable List')
 SheetList = [RestDF,InsecureDF,LocalDF,AssistDF]
 
 MasterDF = pd.merge(HealthDF,StoresDF,how = 'outer', on = "FIPS")
@@ -63,10 +64,13 @@ FMktWIC09_13,FMktWICCash09_13,FMktSFMNP09_13]
 
 ResultsDF = pd.concat(ResultsList, axis = 1)
 
+VariableDict = dict(zip(VariablesDF['Variable Code'], VariablesDF['Variable Name']))
+
+
 for Variable in ResultsList:
     fig,ax = plt.subplots()
-    plt.ylabel('ChObese08_11')
-    plt.xlabel(Variable.name)
+    plt.ylabel('Childhood Obesity, 2008-2011 (% Change)')
+    plt.xlabel(VariableDict[Variable.name])
     plt.scatter(Variable,ChObese08_11)
     plt.show()
     
